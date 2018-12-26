@@ -8,9 +8,12 @@
           </q-card-title>
           <q-card-separator />
           <q-card-main>
-            <q-input v-model="siteName" type="text" float-label="站点名称" placeholder="输入站点名称" />
-            <q-input v-model="siteDescription" type="text" float-label="站点描述" placeholder="输入站点描述" />
-            <q-input v-model="siteAddress" type="url" float-label="站点地址" placeholder="输入站点地址" />
+            <q-input v-model="siteName" type="text" float-label="站点名称" placeholder="输入站点名称"
+                     @blur="$v.siteName.$touch" :error="$v.siteName.$error" />
+            <q-input v-model="siteDescription" type="text" float-label="站点描述" placeholder="输入站点描述"
+                     @blur="$v.siteDescription.$touch" :error="$v.siteDescription.$error" />
+            <q-input v-model="siteAddress" type="url" float-label="站点地址" placeholder="输入站点地址"
+                     @blur="$v.siteAddress.$touch" :error="$v.siteAddress.$error" />
           </q-card-main>
           <q-card-separator />
           <q-card-actions>
@@ -25,10 +28,14 @@
           </q-card-title>
           <q-card-separator />
           <q-card-main>
-            <q-input v-model="personalName" type="text" float-label="昵称" placeholder="输入昵称" />
-            <q-input v-model="personalEmail" type="email" float-label="电子邮箱" placeholder="输入电子邮箱" />
-            <q-input v-model="personalSummary" type="text" float-label="简介" placeholder="输入简介" />
-            <q-input v-model="personalGithub" type="url" float-label="github" placeholder="github" />
+            <q-input v-model="personalName" type="text" float-label="昵称" placeholder="输入昵称"
+                     @blur="$v.personalName.$touch" :error="$v.personalName.$error" />
+            <q-input v-model="personalEmail" type="email" float-label="电子邮箱" placeholder="输入电子邮箱"
+                     @blur="$v.personalEmail.$touch" :error="$v.personalEmail.$error" />
+            <q-input v-model="personalSummary" type="text" float-label="简介" placeholder="输入简介"
+                     @blur="$v.personalSummary.$touch" :error="$v.personalSummary.$error" />
+            <q-input v-model="personalGithub" type="url" float-label="github" placeholder="github"
+                     @blur="$v.personalGithub.$touch" :error="$v.personalGithub.$error" />
           </q-card-main>
           <q-card-separator />
           <q-card-actions>
@@ -41,6 +48,7 @@
 </template>
 
 <script>
+import { required } from 'vuelidate/lib/validators'
 export default {
   name: 'OptionGeneral',
   data () {
@@ -53,6 +61,15 @@ export default {
       personalSummaryData: '',
       personalGithubData: ''
     }
+  },
+  validations: {
+    siteNameData: { required },
+    siteAddressData: { required },
+    siteDescriptionData: { required },
+    personalNameData: { required },
+    personalEmailData: { required },
+    personalSummaryData: { required },
+    personalGithubData: { required }
   },
   computed: {
     siteName: {

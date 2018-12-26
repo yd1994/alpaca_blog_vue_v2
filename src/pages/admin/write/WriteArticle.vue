@@ -6,13 +6,17 @@
       </q-card-title>
       <q-card-separator />
       <q-card-main>
-        <q-input v-model="article.title" type="text" float-label="标题" placeholder="输入文章标题" />
-        <q-input v-model="article.summary" type="textarea" rows="3" float-label="简介" placeholder="主页面显示内容"/>
+        <q-input v-model="article.title" type="text" float-label="标题" placeholder="输入文章标题"
+                 @blur="$v.article.title.$touch" :error="$v.article.title.$error"/>
+        <q-input v-model="article.summary" type="textarea" rows="3" float-label="简介" placeholder="主页面显示内容"
+                 @blur="$v.article.summary.$touch" :error="$v.article.summary.$error"/>
         <q-toggle v-model="article.top" label="置顶" left-label class="q-mt-md" />
         <q-select v-model="article.category" :options="categorySelect"
-                  radio toggle no-icon float-label="分类" placeholder="选择所属分类" class="q-mt-md"/>
+                  radio toggle no-icon float-label="分类" placeholder="选择所属分类" class="q-mt-md"
+                  @blur="$v.article.category.$touch" :error="$v.article.category.$error"/>
         <q-select v-model="article.articleTags" :options="articleTagSelect"
-                  multiple no-icon float-label="标签" placeholder="选择标签" class="q-mt-md"/>
+                  multiple no-icon float-label="标签" placeholder="选择标签" class="q-mt-md"
+                  @blur="$v.article.articleTags.$touch" :error="$v.article.articleTags.$error"/>
       </q-card-main>
     </q-card>
     <mavon-editor ref="mavonEditor" v-model="article.content" :toolbars="toolbars" :subfield="!$q.screen.lt.md"
@@ -24,6 +28,7 @@
 <script>
 import 'mavon-editor/dist/css/index.css'
 import { mavonEditor } from 'mavon-editor'
+import { required } from 'vuelidate/lib/validators'
 export default {
   name: 'WriteArticle',
   components: { mavonEditor },
@@ -45,6 +50,14 @@ export default {
       },
       categorySelect: [],
       articleTagSelect: []
+    }
+  },
+  validations: {
+    article: {
+      title: { required },
+      summary: { required },
+      category: { required },
+      articleTags: { required }
     }
   },
   computed: {
@@ -109,6 +122,14 @@ export default {
       })
     },
     clickSaveBtn: function () {
+      this.$v.$touch()
+      if (this.$v.$error) {
+        this.$q.notify({
+          message: '输入有误，请检查后重试。',
+          position: 'top'
+        })
+        return
+      }
       if (this.articleId === undefined) {
         this.saveArticle()
       } else {

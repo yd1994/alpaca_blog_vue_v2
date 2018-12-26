@@ -2,8 +2,10 @@
   <q-modal v-model="openedModal" minimized no-backdrop-dismiss >
     <div class="q-pa-lg">
       <div class="q-headline q-mb-md">{{ tipsInfo.title }}</div>
-      <q-input v-model="articleTag.name" float-label="标签名称" placeholder="输入标签名称" />
-      <q-input v-model="articleTag.description" type="textarea" float-label="标签描述" placeholder="输入标签详细描述" :max-height="50" rows="2" />
+      <q-input v-model="articleTag.name" float-label="标签名称" placeholder="输入标签名称"
+               @blur="$v.articleTag.name.$touch" :error="$v.articleTag.name.$error" />
+      <q-input v-model="articleTag.description" type="textarea" float-label="标签描述" placeholder="输入标签详细描述" :max-height="50" rows="2"
+               @blur="$v.articleTag.description.$touch" :error="$v.articleTag.description.$error" />
       <div class="row q-mt-md">
         <q-btn color="green" @click="openedModal = false" label="取消" />
         <div class="col" />
@@ -14,6 +16,7 @@
 </template>
 
 <script>
+import { required } from 'vuelidate/lib/validators'
 const info = {
   add: {
     title: '添加标签',
@@ -29,9 +32,18 @@ export default {
   data () {
     return {
       openedModal: false,
-      articleTag: {},
+      articleTag: {
+        name: '',
+        description: ''
+      },
       add: false,
       tipsInfo: info.update
+    }
+  },
+  validations: {
+    articleTag: {
+      name: { required },
+      description: { required }
     }
   },
   methods: {
@@ -48,6 +60,14 @@ export default {
       this.openedModal = true
     },
     clickOK: function () {
+      this.$v.$touch()
+      if (this.$v.$error) {
+        this.$q.notify({
+          message: '输入有误，请检查后重试。',
+          position: 'top'
+        })
+        return
+      }
       if (this.add) {
         let parans = {
           name: this.articleTag.name,
