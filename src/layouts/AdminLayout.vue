@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh LpR lFf">
+  <q-layout view="lHh LpR lff">
     <q-layout-header :reveal="true">
       <!-- logo 处 -->
       <q-toolbar inverted color="dark">

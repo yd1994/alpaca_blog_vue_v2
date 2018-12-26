@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh LpR lFf">
+  <q-layout view="lHh LpR lff">
     <q-layout-header :reveal="true">
       <q-toolbar-title>
         {{ title }}
