@@ -6,7 +6,7 @@
         {{ $store.state.info.siteDescription.value }}
       </div>
       <hr class="q-hr q-my-lg">
-      <div class="q-title q-mb-md">全新的版本正在开发中，点击按钮开始查阅。</div>
+      <div class="q-title q-mb-md">全新版本，点击按钮开始查阅。</div>
       <q-btn color="primary" class="q-py-sm q-px-xl" label="开始查阅" to="/index" push />
     </q-jumbotron>
   </q-page>
