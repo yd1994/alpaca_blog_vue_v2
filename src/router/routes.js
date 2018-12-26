@@ -88,6 +88,7 @@ const routes = [
       {
         path: '/admin/person/updatePassword',
         name: 'updatePassword',
+        meta: { requiresAuth: true },
         component: resolve => require(['pages/admin/person/UpdatePassword.vue'], resolve)
       },
       {
