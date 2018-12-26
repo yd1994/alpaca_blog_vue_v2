@@ -8,12 +8,9 @@
           </q-card-title>
           <q-card-separator />
           <q-card-main>
-            <q-input v-model="siteName" type="text" float-label="站点名称" placeholder="输入站点名称"
-                     @blur="$v.siteName.$touch" :error="$v.siteName.$error" />
-            <q-input v-model="siteDescription" type="text" float-label="站点描述" placeholder="输入站点描述"
-                     @blur="$v.siteDescription.$touch" :error="$v.siteDescription.$error" />
-            <q-input v-model="siteAddress" type="url" float-label="站点地址" placeholder="输入站点地址"
-                     @blur="$v.siteAddress.$touch" :error="$v.siteAddress.$error" />
+            <q-input v-model="siteName" type="text" float-label="站点名称" placeholder="输入站点名称" />
+            <q-input v-model="siteAddress" type="text" float-label="站点描述" placeholder="输入站点描述" />
+            <q-input v-model="siteDescription" type="url" float-label="站点地址" placeholder="输入站点地址" />
           </q-card-main>
           <q-card-separator />
           <q-card-actions>
@@ -28,14 +25,10 @@
           </q-card-title>
           <q-card-separator />
           <q-card-main>
-            <q-input v-model="personalName" type="text" float-label="昵称" placeholder="输入昵称"
-                     @blur="$v.personalName.$touch" :error="$v.personalName.$error" />
-            <q-input v-model="personalEmail" type="email" float-label="电子邮箱" placeholder="输入电子邮箱"
-                     @blur="$v.personalEmail.$touch" :error="$v.personalEmail.$error" />
-            <q-input v-model="personalSummary" type="text" float-label="简介" placeholder="输入简介"
-                     @blur="$v.personalSummary.$touch" :error="$v.personalSummary.$error" />
-            <q-input v-model="personalGithub" type="url" float-label="github" placeholder="github"
-                     @blur="$v.personalGithub.$touch" :error="$v.personalGithub.$error" />
+            <q-input v-model="personalName" type="text" float-label="昵称" placeholder="输入昵称" />
+            <q-input v-model="personalEmail" type="email" float-label="电子邮箱" placeholder="输入电子邮箱" />
+            <q-input v-model="personalSummary" type="text" float-label="简介" placeholder="输入简介" />
+            <q-input v-model="personalGithub" type="url" float-label="github" placeholder="github" />
           </q-card-main>
           <q-card-separator />
           <q-card-actions>
@@ -48,28 +41,22 @@
 </template>
 
 <script>
-import { required } from 'vuelidate/lib/validators'
 export default {
   name: 'OptionGeneral',
   data () {
     return {
-      siteNameData: '',
-      siteAddressData: '',
-      siteDescriptionData: '',
-      personalNameData: '',
-      personalEmailData: '',
-      personalSummaryData: '',
-      personalGithubData: ''
+      site: {
+        nameData: '',
+        addressData: '',
+        descriptionData: ''
+      },
+      personal: {
+        nameData: '',
+        emailData: '',
+        summaryData: '',
+        githubData: ''
+      }
     }
-  },
-  validations: {
-    siteNameData: { required },
-    siteAddressData: { required },
-    siteDescriptionData: { required },
-    personalNameData: { required },
-    personalEmailData: { required },
-    personalSummaryData: { required },
-    personalGithubData: { required }
   },
   computed: {
     siteName: {
@@ -77,7 +64,7 @@ export default {
         return this.$store.state.info.siteName.value
       },
       set: function (siteName) {
-        this.siteNameData = siteName
+        this.site.nameData = siteName
       }
     },
     siteAddress: {
@@ -85,7 +72,7 @@ export default {
         return this.$store.state.info.siteAddress.value
       },
       set: function (siteAddress) {
-        this.siteAddressData = siteAddress
+        this.site.addressData = siteAddress
       }
     },
     siteDescription: {
@@ -93,7 +80,7 @@ export default {
         return this.$store.state.info.siteDescription.value
       },
       set: function (siteDescription) {
-        this.siteDescriptionData = siteDescription
+        this.site.descriptionData = siteDescription
       }
     },
     personalName: {
@@ -101,7 +88,7 @@ export default {
         return this.$store.state.info.personalName.value
       },
       set: function (personalName) {
-        this.personalNameData = personalName
+        this.personal.nameData = personalName
       }
     },
     personalEmail: {
@@ -109,7 +96,7 @@ export default {
         return this.$store.state.info.personalEmail.value
       },
       set: function (personalEmail) {
-        this.personalEmailData = personalEmail
+        this.personal.emailData = personalEmail
       }
     },
     personalSummary: {
@@ -117,7 +104,7 @@ export default {
         return this.$store.state.info.personalSummary.value
       },
       set: function (personalSummary) {
-        this.personalSummaryData = personalSummary
+        this.personal.summaryData = personalSummary
       }
     },
     personalGithub: {
@@ -125,7 +112,7 @@ export default {
         return this.$store.state.info.personalGithub.value
       },
       set: function (personalGithub) {
-        this.personalGithubData = personalGithub
+        this.personal.githubData = personalGithub
       }
     }
   },
@@ -135,19 +122,19 @@ export default {
     },
     updateSite: function () {
       this.$apiService.systemInformation.update.siteName(
-        this.siteNameData || this.siteName,
+        this.site.nameData || this.siteName,
         this.$store.state.info.siteName.version,
         () => { this.$utils.systemInfo.setSiteNameForStore(this.$store) },
         () => {}
       )
       this.$apiService.systemInformation.update.siteAddress(
-        this.siteAddressData || this.siteAddress,
+        this.site.addressData || this.siteAddress,
         this.$store.state.info.siteAddress.version,
         () => { this.$utils.systemInfo.setSiteAddressForStore(this.$store) },
         () => {}
       )
       this.$apiService.systemInformation.update.siteDescription(
-        this.siteDescriptionData || this.siteDescription,
+        this.site.descriptionData || this.siteDescription,
         this.$store.state.info.siteDescription.version,
         () => { this.$utils.systemInfo.setSiteDescriptionForStore(this.$store) },
         () => {}
@@ -155,25 +142,25 @@ export default {
     },
     updatePerson: function () {
       this.$apiService.systemInformation.update.personalName(
-        this.personalNameData || this.personalName,
+        this.personal.nameData || this.personalName,
         this.$store.state.info.personalName.version,
         () => { this.$utils.systemInfo.setPersonalNameForStore(this.$store) },
         () => {}
       )
       this.$apiService.systemInformation.update.personalEmail(
-        this.personalEmailData || this.personalEmail,
+        this.personal.emailData || this.personalEmail,
         this.$store.state.info.personalEmail.version,
         () => { this.$utils.systemInfo.setPersonalEmailForStore(this.$store) },
         () => {}
       )
       this.$apiService.systemInformation.update.personalSummary(
-        this.personalSummaryData || this.personalSummary,
+        this.personal.summaryData || this.personalSummary,
         this.$store.state.info.personalSummary.version,
         () => { this.$utils.systemInfo.setPersonalSummaryForStore(this.$store) },
         () => {}
       )
       this.$apiService.systemInformation.update.personalGithub(
-        this.personalGithubData || this.personalGithub,
+        this.personal.githubData || this.personalGithub,
         this.$store.state.info.personalGithub.version,
         () => { this.$utils.systemInfo.setPersonalGithubForStore(this.$store) },
         () => {}
