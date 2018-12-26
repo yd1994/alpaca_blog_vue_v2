@@ -158,28 +158,23 @@ module.exports = function (ctx) {
         theme_color: '#027be3',
         icons: [
           {
-            'src': 'statics/icons/icon-128x128.png',
-            'sizes': '128x128',
+            'src': 'statics/icons/icon-25x25.png',
+            'sizes': '25x25',
             'type': 'image/png'
           },
           {
-            'src': 'statics/icons/icon-192x192.png',
-            'sizes': '192x192',
+            'src': 'statics/icons/icon-50x50.png',
+            'sizes': '50x50',
             'type': 'image/png'
           },
           {
-            'src': 'statics/icons/icon-256x256.png',
-            'sizes': '256x256',
+            'src': 'statics/icons/icon-100x100.png',
+            'sizes': '100x100',
             'type': 'image/png'
           },
           {
-            'src': 'statics/icons/icon-384x384.png',
-            'sizes': '384x384',
-            'type': 'image/png'
-          },
-          {
-            'src': 'statics/icons/icon-512x512.png',
-            'sizes': '512x512',
+            'src': 'statics/icons/icon-200x200.png',
+            'sizes': '200x200',
             'type': 'image/png'
           }
         ]
